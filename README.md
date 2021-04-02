@@ -65,6 +65,9 @@ I tried to make my implementation as generic as possible to facilitate flexibili
 it should be relatively easy to use the graph implementation with any object that fulfills the 
 basic equals / hash code contract, and also provides a sensible to string implementation.
 
+I used a max value that was less than the integer max value to prevent overflow - which would 
+/ could have resulted in negative edge weight calculations, rendering the algorithm broken.
+
 The project comes bundled with maven wrapper. To build the project cd into the directory and 
 execute the following:
 
