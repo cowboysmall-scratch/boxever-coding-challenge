@@ -128,15 +128,12 @@ Once the project has completed building you can run it as follows:
  |____/ \___/_/\_\___| \_/ \___|_|     \____\___/ \__,_|_|_| |_|\__, |  \____|_| |_|\__,_|_|_|\___|_| |_|\__, |\___|
                                                                 |___/                                    |___/
 
-
-Built with Spring Boot ::  (v2.3.9.RELEASE)
-
-
 shortest route between DUB and SYD
 
 DUB -- LHR (1)
 LHR -- BKK (9)
 BKK -- SYD (11)
+
 time: 21
 
 
@@ -156,10 +153,6 @@ If no route exists you will see:
  | |_) | (_) >  <  __/\ V /  __/ |    | |__| (_) | (_| | | | | | (_| | | |___| | | | (_| | | |  __/ | | | (_| |  __/
  |____/ \___/_/\_\___| \_/ \___|_|     \____\___/ \__,_|_|_| |_|\__, |  \____|_| |_|\__,_|_|_|\___|_| |_|\__, |\___|
                                                                 |___/                                    |___/
-
-
-Built with Spring Boot ::  (v2.3.9.RELEASE)
-
 
 no route between DUB and ABC
 
@@ -181,10 +174,6 @@ To get help with the options execute the following:
  | |_) | (_) >  <  __/\ V /  __/ |    | |__| (_) | (_| | | | | | (_| | | |___| | | | (_| | | |  __/ | | | (_| |  __/
  |____/ \___/_/\_\___| \_/ \___|_|     \____\___/ \__,_|_|_| |_|\__, |  \____|_| |_|\__,_|_|_|\___|_| |_|\__, |\___|
                                                                 |___/                                    |___/
-
-
-Built with Spring Boot ::  (v2.3.9.RELEASE)
-
 
 usage: java -jar /path/to/boxever-coding-challenge.jar OPTIONS
 
