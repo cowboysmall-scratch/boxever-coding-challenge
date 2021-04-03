@@ -132,12 +132,37 @@ Once the project has completed building you can run it as follows:
 Built with Spring Boot ::  (v2.3.9.RELEASE)
 
 
-route between DUB and SYD
+shortest route between DUB and SYD
 
 DUB -- LHR (1)
 LHR -- BKK (9)
 BKK -- SYD (11)
 time: 21
+
+
+
+```
+
+If no route exists you will see:
+
+
+```shell
+
+> java -jar -Dspring.main.banner-mode=console target/boxever-coding-challenge-0.0.1-SNAPSHOT.jar --directed -s DUB -d ABC 
+
+  ____                                  ____          _ _                ____ _           _ _
+ | __ )  _____  _______   _____ _ __   / ___|___   __| (_)_ __   __ _   / ___| |__   __ _| | | ___ _ __   __ _  ___
+ |  _ \ / _ \ \/ / _ \ \ / / _ \ '__| | |   / _ \ / _` | | '_ \ / _` | | |   | '_ \ / _` | | |/ _ \ '_ \ / _` |/ _ \
+ | |_) | (_) >  <  __/\ V /  __/ |    | |__| (_) | (_| | | | | | (_| | | |___| | | | (_| | | |  __/ | | | (_| |  __/
+ |____/ \___/_/\_\___| \_/ \___|_|     \____\___/ \__,_|_|_| |_|\__, |  \____|_| |_|\__,_|_|_|\___|_| |_|\__, |\___|
+                                                                |___/                                    |___/
+
+
+Built with Spring Boot ::  (v2.3.9.RELEASE)
+
+
+no route between DUB and ABC
+
 
 
 
