@@ -73,18 +73,18 @@ not make sense.
 ## The Code
 
 I adhered faithfully to the classic implementation of Dijkstra's Algorithm - the priority queue 
-variation - pseudocode can be found at [here](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Using_a_priority_queue). 
+variation - pseudocode can be found [here](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Using_a_priority_queue). 
 I tried to make my implementation as generic as possible to facilitate flexibility - 
 it should be relatively easy to use the graph implementation with any object that fulfills the 
-basic equals / hash code contract, and also provides a sensible to string implementation.
+basic `equals` / `hashCode` contract, and also provides a sensible `toString` implementation.
 
 
 I used a max value that was less than the integer max value to prevent overflow - which would 
-/ could have resulted in negative calculations, and negative edge weights, rendering the algorithm 
-broken.
+/ could have resulted in negative duration calculations, and thus negative edge weights, which 
+would have broken the algorithm.
 
 
-You will need to clone the project:
+In order to run the application You will first need to clone the project:
 
 
 ```shell
@@ -114,7 +114,7 @@ The project comes bundled with maven wrapper. To build the project execute the f
 ```
 
 
-Once the project has completed building you can run it as follows:
+Once the build process has completed you can run it as follows:
 
 
 ```shell
