@@ -41,9 +41,17 @@ public class Application implements CommandLineRunner {
 
             Graph<String> graph = graphRepository.createGraph(options.isDirected());
 
-            List<Edge<String>> edges = graph.shortestPath(options.getSource(), options.getDestination());
-            edges.forEach(System.out::println);
-            System.out.printf("time: %d%n\n", edges.stream().mapToInt(Edge::getWeight).sum());
+            if (graph.hasPath(options.getSource(), options.getDestination())) {
+
+                System.out.printf("\nshortest route between %s and %s\n\n", options.getSource(), options.getDestination());
+                List<Edge<String>> edges = graph.shortestPath(options.getSource(), options.getDestination());
+                edges.forEach(System.out::println);
+                System.out.printf("\ntime: %d\n\n", edges.stream().mapToInt(Edge::getWeight).sum());
+
+            } else {
+
+                System.out.printf("\nno route between %s and %s\n\n", options.getSource(), options.getDestination());
+            }
         }
     }
 }

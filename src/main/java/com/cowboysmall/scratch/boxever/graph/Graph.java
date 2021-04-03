@@ -1,12 +1,6 @@
 package com.cowboysmall.scratch.boxever.graph;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.PriorityQueue;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
@@ -47,6 +41,34 @@ public class Graph<N> {
 
 
     //_________________________________________________________________________
+
+    public boolean hasPath(N source, N destination) {
+
+        Queue<N> queue = new LinkedList<>();
+        Set<N> visited = new HashSet<>();
+
+        queue.offer(source);
+        visited.add(source);
+
+        while (!queue.isEmpty()) {
+
+            N u = queue.poll();
+
+            if (u.equals(destination))
+                return true;
+
+            for (Edge<N> edge : findEdgeNeighbours(u)) {
+
+                N v = edge.getDestination();
+                if (!visited.contains(v)) {
+
+                    queue.offer(v);
+                    visited.add(v);
+                }
+            }
+        }
+        return false;
+    }
 
     public List<Edge<N>> shortestPath(N source, N destination) {
 
