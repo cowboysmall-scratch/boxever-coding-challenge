@@ -20,7 +20,10 @@ public class ResourceGraphRepository implements GraphRepository<Graph<String, Lo
 
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(graphResource.getInputStream()))) {
 
-            Graph<String, Long> graph = new Graph<>(directed);
+            Graph<String, Long> graph =
+                    Graph.<String, Long>builder()
+                            .directed(directed)
+                            .build();
 
             reader.lines().forEach(line -> {
 

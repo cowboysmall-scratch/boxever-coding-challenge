@@ -1,5 +1,10 @@
 package com.cowboysmall.scratch.boxever.graph;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -15,6 +20,10 @@ import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Graph<N, V extends Number> {
 
     private static final BigDecimal MAX_VALUE = new BigDecimal("1000000000000.0");
@@ -23,17 +32,6 @@ public class Graph<N, V extends Number> {
     private final Set<N> nodes = new HashSet<>();
 
     private boolean directed;
-
-
-    //_________________________________________________________________________
-
-    public Graph(boolean directed) {
-
-        this.directed = directed;
-    }
-
-    public Graph() {
-    }
 
 
     //_________________________________________________________________________
@@ -131,6 +129,11 @@ public class Graph<N, V extends Number> {
 
 
     //_________________________________________________________________________
+
+    public boolean containsNode(N node) {
+
+        return nodes.contains(node);
+    }
 
     public Edge<N, V> findEdge(N source, N destination) {
 
