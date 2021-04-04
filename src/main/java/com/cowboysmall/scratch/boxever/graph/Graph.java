@@ -1,16 +1,25 @@
 package com.cowboysmall.scratch.boxever.graph;
 
-import java.util.*;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static java.lang.String.format;
-import static java.util.Comparator.comparingInt;
 
-public class Graph<N> {
+public class Graph<N, V extends Number> {
 
-    private static final Integer MAX_VALUE = Integer.valueOf("100000000");
+    private static final BigDecimal MAX_VALUE = new BigDecimal("1000000000000.0");
 
-    private final List<Edge<N>> edges = new ArrayList<>();
+    private final List<Edge<N, V>> edges = new ArrayList<>();
     private final Set<N> nodes = new HashSet<>();
 
     private boolean directed;
@@ -29,14 +38,14 @@ public class Graph<N> {
 
     //_________________________________________________________________________
 
-    public void addEdge(N source, N destination, Integer weight) {
+    public void addEdge(N source, N destination, V weight) {
 
         nodes.add(source);
         nodes.add(destination);
 
-        edges.add(Edge.<N>builder().source(source).destination(destination).weight(weight).build());
+        edges.add(Edge.<N, V>builder().source(source).destination(destination).weight(weight).build());
         if (!directed)
-            edges.add(Edge.<N>builder().source(destination).destination(source).weight(weight).build());
+            edges.add(Edge.<N, V>builder().source(destination).destination(source).weight(weight).build());
     }
 
 
@@ -57,7 +66,7 @@ public class Graph<N> {
             if (u.equals(destination))
                 return true;
 
-            for (Edge<N> edge : findEdgeNeighbours(u)) {
+            for (Edge<N, V> edge : findEdgeNeighbours(u)) {
 
                 N v = edge.getDestination();
                 if (!visited.contains(v)) {
@@ -71,30 +80,31 @@ public class Graph<N> {
         return false;
     }
 
-    public List<Edge<N>> shortestPath(N source, N destination) {
+    public List<Edge<N, V>> shortestPath(N source, N destination) {
 
-        Map<N, Integer> dist = new HashMap<>();
+        Map<N, BigDecimal> dist = new HashMap<>();
         Map<N, N> prev = new HashMap<>();
 
         nodes.forEach(node -> dist.put(node, MAX_VALUE));
         nodes.forEach(node -> prev.put(node, null));
 
-        dist.put(source, 0);
+        dist.put(source, BigDecimal.ZERO);
 
         PriorityQueue<N> priorityQueue =
-                new PriorityQueue<>(comparingInt(dist::get));
+                new PriorityQueue<>(Comparator.comparing(dist::get));
+
         priorityQueue.addAll(nodes);
 
         while (!priorityQueue.isEmpty()) {
 
             N u = priorityQueue.poll();
 
-            for (Edge<N> edge : findEdgeNeighbours(u)) {
+            for (Edge<N, V> edge : findEdgeNeighbours(u)) {
 
-                int alt = dist.get(u) + edge.getWeight();
+                BigDecimal alt = dist.get(u).add(new BigDecimal(edge.getWeight().toString()));
                 N v = edge.getDestination();
 
-                if (alt < dist.get(v)) {
+                if (alt.compareTo(dist.get(v)) < 0) {
 
                     priorityQueue.remove(v);
                     dist.put(v, alt);
@@ -104,7 +114,7 @@ public class Graph<N> {
             }
         }
 
-        List<Edge<N>> route = new ArrayList<>();
+        List<Edge<N, V>> route = new ArrayList<>();
 
         N current = destination;
         N parent = prev.get(current);
@@ -122,7 +132,7 @@ public class Graph<N> {
 
     //_________________________________________________________________________
 
-    public Edge<N> findEdge(N source, N destination) {
+    public Edge<N, V> findEdge(N source, N destination) {
 
         return edges.stream()
                 .filter(edge -> edge.hasSource(source))
@@ -131,7 +141,7 @@ public class Graph<N> {
                 .orElse(null);
     }
 
-    public List<Edge<N>> findEdgeNeighbours(N node) {
+    public List<Edge<N, V>> findEdgeNeighbours(N node) {
 
         return edges.stream()
                 .filter(edge -> edge.getSource().equals(node))

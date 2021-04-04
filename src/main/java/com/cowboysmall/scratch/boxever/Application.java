@@ -19,7 +19,7 @@ public class Application implements CommandLineRunner {
     private OptionsReader optionsReader;
 
     @Autowired
-    private GraphRepository<Graph<String>> graphRepository;
+    private GraphRepository<Graph<String, Long>> graphRepository;
 
 
     //_________________________________________________________________________
@@ -39,14 +39,14 @@ public class Application implements CommandLineRunner {
 
         if (options.isValid()) {
 
-            Graph<String> graph = graphRepository.createGraph(options.isDirected());
+            Graph<String, Long> graph = graphRepository.createGraph(options.isDirected());
 
             if (graph.hasPath(options.getSource(), options.getDestination())) {
 
                 System.out.printf("\nshortest route between %s and %s\n\n", options.getSource(), options.getDestination());
-                List<Edge<String>> edges = graph.shortestPath(options.getSource(), options.getDestination());
+                List<Edge<String, Long>> edges = graph.shortestPath(options.getSource(), options.getDestination());
                 edges.forEach(System.out::println);
-                System.out.printf("\ntime: %d\n\n", edges.stream().mapToInt(Edge::getWeight).sum());
+                System.out.printf("\ntime: %d\n\n", edges.stream().mapToLong(Edge::getWeight).sum());
 
             } else {
 

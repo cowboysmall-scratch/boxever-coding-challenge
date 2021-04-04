@@ -11,13 +11,13 @@ import static java.lang.String.format;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Edge<N> {
+public class Edge<N, V extends Number> {
 
     private N source;
 
     private N destination;
 
-    private Integer weight;
+    private V weight;
 
 
     //_________________________________________________________________________
