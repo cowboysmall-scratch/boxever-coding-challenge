@@ -11,30 +11,30 @@ import static java.lang.String.format;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Edge<N, V extends Number> {
+public class Edge<V, W extends Number> {
 
-    private N source;
+    private V source;
 
-    private N destination;
+    private V destination;
 
-    private V weight;
+    private W weight;
 
 
     //_________________________________________________________________________
 
-    public boolean hasSource(N source) {
+    public boolean hasSource(V source) {
 
         return this.source.equals(source);
     }
 
-    public boolean hasDestination(N destination) {
+    public boolean hasDestination(V destination) {
 
         return this.destination.equals(destination);
     }
 
-    public Edge<N, V> reverse() {
+    public Edge<V, W> reverse() {
 
-        return Edge.<N, V>builder()
+        return Edge.<V, W>builder()
                 .source(destination)
                 .destination(source)
                 .weight(weight)

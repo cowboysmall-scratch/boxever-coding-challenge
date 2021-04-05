@@ -17,22 +17,14 @@ public class GraphTest {
         Graph<String, Long> graph = new Graph<>();
 
         graph.addEdge(new Edge<>("A", "B", 5L));
-        graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
         graph.addEdge(new Edge<>("A", "Z", 3L));
 
+
         assertThat(graph.hasPath("A", "B"), is(true));
-        assertThat(graph.hasPath("A", "C"), is(true));
-        assertThat(graph.hasPath("A", "D"), is(true));
-        assertThat(graph.hasPath("A", "E"), is(true));
         assertThat(graph.hasPath("A", "Z"), is(true));
 
         assertThat(graph.hasPath("Z", "A"), is(true));
         assertThat(graph.hasPath("Z", "B"), is(true));
-        assertThat(graph.hasPath("Z", "C"), is(true));
-        assertThat(graph.hasPath("Z", "D"), is(true));
-        assertThat(graph.hasPath("Z", "E"), is(true));
     }
 
 
@@ -42,22 +34,14 @@ public class GraphTest {
         Graph<String, Long> graph = new Graph<>(true);
 
         graph.addEdge(new Edge<>("A", "B", 5L));
-        graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
         graph.addEdge(new Edge<>("A", "Z", 3L));
 
+
         assertThat(graph.hasPath("A", "B"), is(true));
-        assertThat(graph.hasPath("A", "C"), is(true));
-        assertThat(graph.hasPath("A", "D"), is(true));
-        assertThat(graph.hasPath("A", "E"), is(true));
         assertThat(graph.hasPath("A", "Z"), is(true));
 
         assertThat(graph.hasPath("Z", "A"), is(false));
         assertThat(graph.hasPath("Z", "B"), is(false));
-        assertThat(graph.hasPath("Z", "C"), is(false));
-        assertThat(graph.hasPath("Z", "D"), is(false));
-        assertThat(graph.hasPath("Z", "E"), is(false));
     }
 
 
@@ -77,6 +61,7 @@ public class GraphTest {
         graph.addEdge(new Edge<>("G", "H", 5L));
         graph.addEdge(new Edge<>("H", "I", 8L));
         graph.addEdge(new Edge<>("I", "Z", 3L));
+
 
         List<Edge<String, Long>> edges1 = graph.shortestPath("A", "Z");
 
@@ -128,6 +113,7 @@ public class GraphTest {
         graph.addEdge(new Edge<>("H", "I", 8L));
         graph.addEdge(new Edge<>("I", "Z", 3L));
 
+
         List<Edge<String, Long>> edges1 = graph.shortestPath("A", "Z");
 
         assertThat(edges1.size(), is(5));
@@ -157,16 +143,11 @@ public class GraphTest {
 
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
-
-        graph.addEdge(new Edge<>("F", "G", 6L));
         graph.addEdge(new Edge<>("G", "H", 5L));
-        graph.addEdge(new Edge<>("H", "I", 8L));
-        graph.addEdge(new Edge<>("I", "Z", 3L));
+
 
         assertThat(graph.shortestPath("C", "G").size(), is(0));
-        assertThat(graph.shortestPath("E", "A").size(), is(4));
+        assertThat(graph.shortestPath("C", "A").size(), is(2));
     }
 
 
@@ -177,16 +158,11 @@ public class GraphTest {
 
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
-
-        graph.addEdge(new Edge<>("F", "G", 6L));
         graph.addEdge(new Edge<>("G", "H", 5L));
-        graph.addEdge(new Edge<>("H", "I", 8L));
-        graph.addEdge(new Edge<>("I", "Z", 3L));
+
 
         assertThat(graph.shortestPath("C", "G").size(), is(0));
-        assertThat(graph.shortestPath("E", "A").size(), is(0));
+        assertThat(graph.shortestPath("C", "A").size(), is(0));
     }
 
 
@@ -197,14 +173,11 @@ public class GraphTest {
 
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
+
 
         assertThat(graph.containsNode("A"), is(true));
         assertThat(graph.containsNode("B"), is(true));
         assertThat(graph.containsNode("C"), is(true));
-        assertThat(graph.containsNode("D"), is(true));
-        assertThat(graph.containsNode("E"), is(true));
         assertThat(graph.containsNode("Z"), is(false));
     }
 
@@ -216,20 +189,15 @@ public class GraphTest {
 
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
+
 
         assertThat(graph.findEdge("A", "B"), is(notNullValue()));
         assertThat(graph.findEdge("B", "A"), is(notNullValue()));
         assertThat(graph.findEdge("B", "C"), is(notNullValue()));
         assertThat(graph.findEdge("C", "B"), is(notNullValue()));
-        assertThat(graph.findEdge("C", "D"), is(notNullValue()));
-        assertThat(graph.findEdge("D", "C"), is(notNullValue()));
-        assertThat(graph.findEdge("D", "E"), is(notNullValue()));
-        assertThat(graph.findEdge("E", "D"), is(notNullValue()));
 
-        assertThat(graph.findEdge("B", "D"), is(nullValue()));
-        assertThat(graph.findEdge("D", "B"), is(nullValue()));
+        assertThat(graph.findEdge("A", "C"), is(nullValue()));
+        assertThat(graph.findEdge("C", "A"), is(nullValue()));
     }
 
 
@@ -240,15 +208,12 @@ public class GraphTest {
 
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("B", "C", 6L));
-        graph.addEdge(new Edge<>("C", "D", 4L));
-        graph.addEdge(new Edge<>("D", "E", 3L));
+
 
         assertThat(graph.findEdge("A", "B"), is(notNullValue()));
         assertThat(graph.findEdge("B", "C"), is(notNullValue()));
-        assertThat(graph.findEdge("C", "D"), is(notNullValue()));
-        assertThat(graph.findEdge("D", "E"), is(notNullValue()));
 
-        assertThat(graph.findEdge("B", "D"), is(nullValue()));
+        assertThat(graph.findEdge("A", "C"), is(nullValue()));
     }
 
 
@@ -260,10 +225,13 @@ public class GraphTest {
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("A", "C", 6L));
         graph.addEdge(new Edge<>("A", "D", 4L));
-        graph.addEdge(new Edge<>("A", "E", 3L));
 
-        assertThat(graph.findEdgeNeighbours("A").size(), is(4));
-        assertThat(graph.findEdgeNeighbours("E").size(), is(1));
+
+        assertThat(graph.findEdgeNeighbours("A").size(), is(3));
+
+        assertThat(graph.findEdgeNeighbours("B").size(), is(1));
+        assertThat(graph.findEdgeNeighbours("C").size(), is(1));
+        assertThat(graph.findEdgeNeighbours("D").size(), is(1));
     }
 
 
@@ -275,9 +243,12 @@ public class GraphTest {
         graph.addEdge(new Edge<>("A", "B", 5L));
         graph.addEdge(new Edge<>("A", "C", 6L));
         graph.addEdge(new Edge<>("A", "D", 4L));
-        graph.addEdge(new Edge<>("A", "E", 3L));
 
-        assertThat(graph.findEdgeNeighbours("A").size(), is(4));
-        assertThat(graph.findEdgeNeighbours("E").size(), is(0));
+
+        assertThat(graph.findEdgeNeighbours("A").size(), is(3));
+
+        assertThat(graph.findEdgeNeighbours("B").size(), is(0));
+        assertThat(graph.findEdgeNeighbours("C").size(), is(0));
+        assertThat(graph.findEdgeNeighbours("D").size(), is(0));
     }
 }

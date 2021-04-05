@@ -24,25 +24,25 @@ import static java.lang.String.format;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class Graph<N, V extends Number> {
+public class Graph<V, W extends Number> {
 
     private static final BigDecimal MAX_VALUE = BigDecimal.valueOf(Long.MAX_VALUE);
 
-    private final List<Edge<N, V>> edges = new ArrayList<>();
+    private final List<Edge<V, W>> edges = new ArrayList<>();
 
-    private final Set<N> nodes = new HashSet<>();
+    private final Set<V> nodes = new HashSet<>();
 
     private boolean directed;
 
 
     //_________________________________________________________________________
 
-    public void addEdges(List<Edge<N, V>> edges) {
+    public void addEdges(List<Edge<V, W>> edges) {
 
         edges.forEach(this::addEdge);
     }
 
-    public void addEdge(Edge<N, V> edge) {
+    public void addEdge(Edge<V, W> edge) {
 
         nodes.add(edge.getSource());
         nodes.add(edge.getDestination());
@@ -55,24 +55,24 @@ public class Graph<N, V extends Number> {
 
     //_________________________________________________________________________
 
-    public boolean hasPath(N source, N destination) {
+    public boolean hasPath(V source, V destination) {
 
-        Queue<N> queue = new LinkedList<>();
-        Set<N> visited = new HashSet<>();
+        Queue<V> queue = new LinkedList<>();
+        Set<V> visited = new HashSet<>();
 
         queue.offer(source);
         visited.add(source);
 
         while (!queue.isEmpty()) {
 
-            N u = queue.poll();
+            V u = queue.poll();
 
             if (u.equals(destination))
                 return true;
 
-            for (Edge<N, V> edge : findEdgeNeighbours(u)) {
+            for (Edge<V, W> edge : findEdgeNeighbours(u)) {
 
-                N v = edge.getDestination();
+                V v = edge.getDestination();
                 if (!visited.contains(v)) {
 
                     queue.offer(v);
@@ -84,28 +84,28 @@ public class Graph<N, V extends Number> {
         return false;
     }
 
-    public List<Edge<N, V>> shortestPath(N source, N destination) {
+    public List<Edge<V, W>> shortestPath(V source, V destination) {
 
-        Map<N, BigDecimal> dist = new HashMap<>();
-        Map<N, N> prev = new HashMap<>();
+        Map<V, BigDecimal> dist = new HashMap<>();
+        Map<V, V> prev = new HashMap<>();
 
         nodes.forEach(node -> dist.put(node, MAX_VALUE));
         nodes.forEach(node -> prev.put(node, null));
 
         dist.put(source, BigDecimal.ZERO);
 
-        PriorityQueue<N> priorityQueue =
+        PriorityQueue<V> priorityQueue =
                 new PriorityQueue<>(Comparator.comparing(dist::get));
         priorityQueue.addAll(nodes);
 
         while (!priorityQueue.isEmpty()) {
 
-            N u = priorityQueue.poll();
+            V u = priorityQueue.poll();
 
-            for (Edge<N, V> edge : findEdgeNeighbours(u)) {
+            for (Edge<V, W> edge : findEdgeNeighbours(u)) {
 
                 BigDecimal alt = dist.get(u).add(new BigDecimal(edge.getWeight().toString()));
-                N v = edge.getDestination();
+                V v = edge.getDestination();
 
                 if (alt.compareTo(dist.get(v)) < 0) {
 
@@ -117,10 +117,10 @@ public class Graph<N, V extends Number> {
             }
         }
 
-        List<Edge<N, V>> route = new ArrayList<>();
+        List<Edge<V, W>> route = new ArrayList<>();
 
-        N current = destination;
-        N parent = prev.get(current);
+        V current = destination;
+        V parent = prev.get(current);
 
         while (parent != null) {
 
@@ -135,12 +135,12 @@ public class Graph<N, V extends Number> {
 
     //_________________________________________________________________________
 
-    public boolean containsNode(N node) {
+    public boolean containsNode(V node) {
 
         return nodes.contains(node);
     }
 
-    public Edge<N, V> findEdge(N source, N destination) {
+    public Edge<V, W> findEdge(V source, V destination) {
 
         return edges.stream()
                 .filter(edge -> edge.hasSource(source))
@@ -149,7 +149,7 @@ public class Graph<N, V extends Number> {
                 .orElse(null);
     }
 
-    public List<Edge<N, V>> findEdgeNeighbours(N node) {
+    public List<Edge<V, W>> findEdgeNeighbours(V node) {
 
         return edges.stream()
                 .filter(edge -> edge.getSource().equals(node))
