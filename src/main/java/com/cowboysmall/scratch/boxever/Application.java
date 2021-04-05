@@ -12,6 +12,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
+import static com.cowboysmall.scratch.boxever.util.GraphAlgorithms.hasPath;
+import static com.cowboysmall.scratch.boxever.util.GraphAlgorithms.shortestPath;
+
 @SpringBootApplication
 public class Application implements CommandLineRunner {
 
@@ -49,14 +52,14 @@ public class Application implements CommandLineRunner {
 
                 System.out.printf("\ndestination %s does not exist\n\n", options.getDestination());
 
-            } else if (!graph.hasPath(options.getSource(), options.getDestination())) {
+            } else if (!hasPath(graph, options.getSource(), options.getDestination())) {
 
                 System.out.printf("\nno route between %s and %s\n\n", options.getSource(), options.getDestination());
 
             } else {
 
                 System.out.printf("\nshortest route between %s and %s\n\n", options.getSource(), options.getDestination());
-                List<Edge<String, Long>> edges = graph.shortestPath(options.getSource(), options.getDestination());
+                List<Edge<String, Long>> edges = shortestPath(graph, options.getSource(), options.getDestination());
                 edges.forEach(System.out::println);
                 System.out.printf("\ntime: %d\n\n", edges.stream().mapToLong(Edge::getWeight).sum());
             }
