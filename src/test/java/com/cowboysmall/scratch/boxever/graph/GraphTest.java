@@ -59,9 +59,8 @@ public class GraphTest {
         assertThat(graph.findEdge("A", "C"), is(nullValue()));
     }
 
-
     @Test
-    public void findEdgeNeighbours() {
+    public void findNeighbours() {
 
         Graph<String, Long> graph = new Graph<>();
 
@@ -70,16 +69,16 @@ public class GraphTest {
         graph.addEdge(new Edge<>("A", "D", 4L));
 
 
-        assertThat(graph.findEdgeNeighbours("A").size(), is(3));
+        assertThat(graph.findNeighbours("A").size(), is(3));
 
-        assertThat(graph.findEdgeNeighbours("B").size(), is(1));
-        assertThat(graph.findEdgeNeighbours("C").size(), is(1));
-        assertThat(graph.findEdgeNeighbours("D").size(), is(1));
+        assertThat(graph.findNeighbours("B").size(), is(1));
+        assertThat(graph.findNeighbours("C").size(), is(1));
+        assertThat(graph.findNeighbours("D").size(), is(1));
     }
 
 
     @Test
-    public void findEdgeNeighbours_Directed() {
+    public void findNeighbours_Directed() {
 
         Graph<String, Long> graph = new Graph<>(true);
 
@@ -88,10 +87,46 @@ public class GraphTest {
         graph.addEdge(new Edge<>("A", "D", 4L));
 
 
-        assertThat(graph.findEdgeNeighbours("A").size(), is(3));
+        assertThat(graph.findNeighbours("A").size(), is(3));
 
-        assertThat(graph.findEdgeNeighbours("B").size(), is(0));
-        assertThat(graph.findEdgeNeighbours("C").size(), is(0));
-        assertThat(graph.findEdgeNeighbours("D").size(), is(0));
+        assertThat(graph.findNeighbours("B").size(), is(0));
+        assertThat(graph.findNeighbours("C").size(), is(0));
+        assertThat(graph.findNeighbours("D").size(), is(0));
+    }
+
+
+    @Test
+    public void findNeighbourEdges() {
+
+        Graph<String, Long> graph = new Graph<>();
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("A", "C", 6L));
+        graph.addEdge(new Edge<>("A", "D", 4L));
+
+
+        assertThat(graph.findNeighbourEdges("A").size(), is(3));
+
+        assertThat(graph.findNeighbourEdges("B").size(), is(1));
+        assertThat(graph.findNeighbourEdges("C").size(), is(1));
+        assertThat(graph.findNeighbourEdges("D").size(), is(1));
+    }
+
+
+    @Test
+    public void findNeighbourEdges_Directed() {
+
+        Graph<String, Long> graph = new Graph<>(true);
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("A", "C", 6L));
+        graph.addEdge(new Edge<>("A", "D", 4L));
+
+
+        assertThat(graph.findNeighbourEdges("A").size(), is(3));
+
+        assertThat(graph.findNeighbourEdges("B").size(), is(0));
+        assertThat(graph.findNeighbourEdges("C").size(), is(0));
+        assertThat(graph.findNeighbourEdges("D").size(), is(0));
     }
 }

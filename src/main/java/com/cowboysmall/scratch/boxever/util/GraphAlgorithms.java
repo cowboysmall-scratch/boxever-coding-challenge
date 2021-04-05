@@ -43,7 +43,7 @@ public class GraphAlgorithms {
             if (u.equals(destination))
                 return true;
 
-            for (Edge<V, W> edge : graph.findEdgeNeighbours(u)) {
+            for (Edge<V, W> edge : graph.findNeighbourEdges(u)) {
 
                 V v = edge.getDestination();
                 if (!visited.contains(v)) {
@@ -77,7 +77,7 @@ public class GraphAlgorithms {
 
             V u = priorityQueue.poll();
 
-            for (Edge<V, W> edge : graph.findEdgeNeighbours(u)) {
+            for (Edge<V, W> edge : graph.findNeighbourEdges(u)) {
 
                 BigDecimal alt = dist.get(u).add(new BigDecimal(edge.getWeight().toString()));
                 V v = edge.getDestination();

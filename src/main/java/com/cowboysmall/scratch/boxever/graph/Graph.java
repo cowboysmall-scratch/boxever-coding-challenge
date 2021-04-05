@@ -60,7 +60,15 @@ public class Graph<V, W extends Number> {
                 .orElse(null);
     }
 
-    public List<Edge<V, W>> findEdgeNeighbours(V node) {
+    public List<V> findNeighbours(V node) {
+
+        return edges.stream()
+                .filter(edge -> edge.getSource().equals(node))
+                .map(Edge::getDestination)
+                .collect(Collectors.toList());
+    }
+
+    public List<Edge<V, W>> findNeighbourEdges(V node) {
 
         return edges.stream()
                 .filter(edge -> edge.getSource().equals(node))
