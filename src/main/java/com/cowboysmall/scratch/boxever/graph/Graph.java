@@ -51,11 +51,16 @@ public class Graph<V, W extends Number> {
         return nodes.contains(node);
     }
 
+    public boolean containsEdge(V source, V destination) {
+
+        return edges.stream()
+                .anyMatch(edge -> edge.hasSource(source) && edge.hasDestination(destination));
+    }
+
     public Edge<V, W> findEdge(V source, V destination) {
 
         return edges.stream()
-                .filter(edge -> edge.hasSource(source))
-                .filter(edge -> edge.hasDestination(destination))
+                .filter(edge -> edge.hasSource(source) && edge.hasDestination(destination))
                 .findFirst()
                 .orElse(null);
     }

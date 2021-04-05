@@ -15,14 +15,16 @@ import java.util.PriorityQueue;
 import java.util.Queue;
 import java.util.Set;
 
-public class GraphAlgorithms {
+import static com.cowboysmall.scratch.boxever.util.NumberUtils.toBigDecimal;
+
+public class GraphUtils {
 
     private static final BigDecimal MAX_VALUE = BigDecimal.valueOf(Long.MAX_VALUE);
 
 
     //_________________________________________________________________________
 
-    private GraphAlgorithms() {
+    private GraphUtils() {
     }
 
 
@@ -79,7 +81,7 @@ public class GraphAlgorithms {
 
             for (Edge<V, W> edge : graph.findNeighbourEdges(u)) {
 
-                BigDecimal alt = dist.get(u).add(new BigDecimal(edge.getWeight().toString()));
+                BigDecimal alt = dist.get(u).add(toBigDecimal(edge.getWeight()));
                 V v = edge.getDestination();
 
                 if (alt.compareTo(dist.get(v)) < 0) {

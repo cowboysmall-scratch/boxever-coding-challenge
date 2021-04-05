@@ -12,8 +12,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.util.List;
 
-import static com.cowboysmall.scratch.boxever.util.GraphAlgorithms.hasPath;
-import static com.cowboysmall.scratch.boxever.util.GraphAlgorithms.shortestPath;
+import static com.cowboysmall.scratch.boxever.util.GraphUtils.hasPath;
+import static com.cowboysmall.scratch.boxever.util.GraphUtils.shortestPath;
 
 @SpringBootApplication
 public class Application implements CommandLineRunner {
@@ -44,13 +44,13 @@ public class Application implements CommandLineRunner {
 
             Graph<String, Long> graph = graphRepository.createGraph(options.isDirected());
 
-            if (!graph.containsNode(options.getSource())) {
+            if (!graph.containsNode(options.getSource()) || !graph.containsNode(options.getDestination())) {
 
-                System.out.printf("\nsource %s does not exist\n\n", options.getSource());
-
-            } else if (!graph.containsNode(options.getDestination())) {
-
-                System.out.printf("\ndestination %s does not exist\n\n", options.getDestination());
+                if (!graph.containsNode(options.getSource()))
+                    System.out.printf("\nsource %s does not exist", options.getSource());
+                if (!graph.containsNode(options.getDestination()))
+                    System.out.printf("\ndestination %s does not exist", options.getDestination());
+                System.out.println("\n");
 
             } else if (!hasPath(graph, options.getSource(), options.getDestination())) {
 

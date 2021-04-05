@@ -26,6 +26,21 @@ public class GraphTest {
 
 
     @Test
+    public void containsEdge() {
+
+        Graph<String, Long> graph = new Graph<>();
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+
+
+        assertThat(graph.containsEdge("A", "B"), is(true));
+        assertThat(graph.containsEdge("B", "C"), is(true));
+        assertThat(graph.containsEdge("A", "Z"), is(false));
+    }
+
+
+    @Test
     public void findEdge() {
 
         Graph<String, Long> graph = new Graph<>();

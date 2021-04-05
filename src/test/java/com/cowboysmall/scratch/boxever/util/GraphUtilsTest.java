@@ -9,7 +9,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class GraphAlgorithmsTest {
+public class GraphUtilsTest {
 
     @Test
     public void hasPath() {
@@ -20,11 +20,11 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("A", "Z", 3L));
 
 
-        assertThat(GraphAlgorithms.hasPath(graph, "A", "B"), is(true));
-        assertThat(GraphAlgorithms.hasPath(graph, "A", "Z"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "A", "B"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "A", "Z"), is(true));
 
-        assertThat(GraphAlgorithms.hasPath(graph, "Z", "A"), is(true));
-        assertThat(GraphAlgorithms.hasPath(graph, "Z", "B"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "Z", "A"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "Z", "B"), is(true));
     }
 
 
@@ -37,11 +37,11 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("A", "Z", 3L));
 
 
-        assertThat(GraphAlgorithms.hasPath(graph, "A", "B"), is(true));
-        assertThat(GraphAlgorithms.hasPath(graph, "A", "Z"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "A", "B"), is(true));
+        assertThat(GraphUtils.hasPath(graph, "A", "Z"), is(true));
 
-        assertThat(GraphAlgorithms.hasPath(graph, "Z", "A"), is(false));
-        assertThat(GraphAlgorithms.hasPath(graph, "Z", "B"), is(false));
+        assertThat(GraphUtils.hasPath(graph, "Z", "A"), is(false));
+        assertThat(GraphUtils.hasPath(graph, "Z", "B"), is(false));
     }
 
 
@@ -63,7 +63,7 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("I", "Z", 3L));
 
 
-        List<Edge<String, Long>> edges1 = GraphAlgorithms.shortestPath(graph, "A", "Z");
+        List<Edge<String, Long>> edges1 = GraphUtils.shortestPath(graph, "A", "Z");
 
         assertThat(edges1.size(), is(5));
 
@@ -79,7 +79,7 @@ public class GraphAlgorithmsTest {
         assertThat(edges1.get(4).getDestination(), is("Z"));
 
 
-        List<Edge<String, Long>> edges2 = GraphAlgorithms.shortestPath(graph, "Z", "A");
+        List<Edge<String, Long>> edges2 = GraphUtils.shortestPath(graph, "Z", "A");
 
         assertThat(edges2.size(), is(5));
 
@@ -114,7 +114,7 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("I", "Z", 3L));
 
 
-        List<Edge<String, Long>> edges1 = GraphAlgorithms.shortestPath(graph, "A", "Z");
+        List<Edge<String, Long>> edges1 = GraphUtils.shortestPath(graph, "A", "Z");
 
         assertThat(edges1.size(), is(5));
 
@@ -130,7 +130,7 @@ public class GraphAlgorithmsTest {
         assertThat(edges1.get(4).getDestination(), is("Z"));
 
 
-        List<Edge<String, Long>> edges2 = GraphAlgorithms.shortestPath(graph, "Z", "A");
+        List<Edge<String, Long>> edges2 = GraphUtils.shortestPath(graph, "Z", "A");
 
         assertThat(edges2.size(), is(0));
     }
@@ -146,8 +146,8 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("G", "H", 5L));
 
 
-        assertThat(GraphAlgorithms.shortestPath(graph, "C", "G").size(), is(0));
-        assertThat(GraphAlgorithms.shortestPath(graph, "C", "A").size(), is(2));
+        assertThat(GraphUtils.shortestPath(graph, "C", "G").size(), is(0));
+        assertThat(GraphUtils.shortestPath(graph, "C", "A").size(), is(2));
     }
 
 
@@ -161,7 +161,7 @@ public class GraphAlgorithmsTest {
         graph.addEdge(new Edge<>("G", "H", 5L));
 
 
-        assertThat(GraphAlgorithms.shortestPath(graph, "C", "G").size(), is(0));
-        assertThat(GraphAlgorithms.shortestPath(graph, "C", "A").size(), is(0));
+        assertThat(GraphUtils.shortestPath(graph, "C", "G").size(), is(0));
+        assertThat(GraphUtils.shortestPath(graph, "C", "A").size(), is(0));
     }
 }
