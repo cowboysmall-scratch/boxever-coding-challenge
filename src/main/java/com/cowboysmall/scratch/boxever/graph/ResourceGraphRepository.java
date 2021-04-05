@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.stream.Collectors;
 
 import static java.lang.Long.parseLong;
 
@@ -25,11 +26,18 @@ public class ResourceGraphRepository implements GraphRepository<Graph<String, Lo
                             .directed(directed)
                             .build();
 
-            reader.lines().forEach(line -> {
-
-                String[] split = line.split(" ");
-                graph.addEdge(split[0], split[1], parseLong(split[2]));
-            });
+            graph.addEdges(
+                    reader.lines()
+                            .map(line -> line.split(" "))
+                            .map(split ->
+                                    Edge.<String, Long>builder()
+                                            .source(split[0])
+                                            .destination(split[1])
+                                            .weight(parseLong(split[2]))
+                                            .build()
+                            )
+                            .collect(Collectors.toList())
+            );
 
             return graph;
 

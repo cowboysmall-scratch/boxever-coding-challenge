@@ -12,123 +12,15 @@ import static org.hamcrest.Matchers.nullValue;
 public class GraphTest {
 
     @Test
-    public void testGraph_ShortestPath() {
+    public void hasPath() {
 
         Graph<String, Long> graph = new Graph<>();
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-        graph.addEdge("E", "Z", 3L);
-
-        graph.addEdge("A", "F", 7L);
-        graph.addEdge("F", "G", 6L);
-        graph.addEdge("G", "H", 5L);
-        graph.addEdge("H", "I", 8L);
-        graph.addEdge("I", "Z", 3L);
-
-        List<Edge<String, Long>> edges = graph.shortestPath("A", "Z");
-
-        assertThat(edges.size(), is(5));
-
-        assertThat(edges.get(0).getSource(), is("A"));
-        assertThat(edges.get(0).getDestination(), is("B"));
-        assertThat(edges.get(1).getSource(), is("B"));
-        assertThat(edges.get(1).getDestination(), is("C"));
-        assertThat(edges.get(2).getSource(), is("C"));
-        assertThat(edges.get(2).getDestination(), is("D"));
-        assertThat(edges.get(3).getSource(), is("D"));
-        assertThat(edges.get(3).getDestination(), is("E"));
-        assertThat(edges.get(4).getSource(), is("E"));
-        assertThat(edges.get(4).getDestination(), is("Z"));
-    }
-
-    @Test
-    public void testGraph_ShortestPath_SubPath() {
-
-        Graph<String, Long> graph = new Graph<>();
-
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-        graph.addEdge("E", "Z", 3L);
-
-        graph.addEdge("A", "F", 7L);
-        graph.addEdge("F", "G", 6L);
-        graph.addEdge("G", "H", 5L);
-        graph.addEdge("H", "I", 8L);
-        graph.addEdge("I", "Z", 3L);
-
-        List<Edge<String, Long>> edges1 = graph.shortestPath("A", "D");
-        List<Edge<String, Long>> edges2 = graph.shortestPath("D", "Z");
-
-        assertThat(edges1.size(), is(3));
-        assertThat(edges2.size(), is(2));
-
-        assertThat(edges1.get(0).getSource(), is("A"));
-        assertThat(edges1.get(0).getDestination(), is("B"));
-        assertThat(edges1.get(1).getSource(), is("B"));
-        assertThat(edges1.get(1).getDestination(), is("C"));
-        assertThat(edges1.get(2).getSource(), is("C"));
-        assertThat(edges1.get(2).getDestination(), is("D"));
-
-        assertThat(edges2.get(0).getSource(), is("D"));
-        assertThat(edges2.get(0).getDestination(), is("E"));
-        assertThat(edges2.get(1).getSource(), is("E"));
-        assertThat(edges2.get(1).getDestination(), is("Z"));
-    }
-
-    @Test
-    public void testGraph_ShortestPath_NoPath() {
-
-        Graph<String, Long> graph = new Graph<>();
-
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-
-        graph.addEdge("F", "G", 6L);
-        graph.addEdge("G", "H", 5L);
-        graph.addEdge("H", "I", 8L);
-        graph.addEdge("I", "Z", 3L);
-
-        assertThat(graph.shortestPath("C", "G").size(), is(0));
-        assertThat(graph.shortestPath("E", "A").size(), is(4));
-    }
-
-    @Test
-    public void testGraph_ShortestPath_NoPath_Directed() {
-
-        Graph<String, Long> graph = new Graph<>(true);
-
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-
-        graph.addEdge("F", "G", 6L);
-        graph.addEdge("G", "H", 5L);
-        graph.addEdge("H", "I", 8L);
-        graph.addEdge("I", "Z", 3L);
-
-        assertThat(graph.shortestPath("C", "G").size(), is(0));
-        assertThat(graph.shortestPath("E", "A").size(), is(0));
-    }
-
-
-    @Test
-    public void testGraph_HasPath() {
-
-        Graph<String, Long> graph = new Graph<>();
-
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-        graph.addEdge("A", "Z", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+        graph.addEdge(new Edge<>("A", "Z", 3L));
 
         assertThat(graph.hasPath("A", "B"), is(true));
         assertThat(graph.hasPath("A", "C"), is(true));
@@ -145,15 +37,15 @@ public class GraphTest {
 
 
     @Test
-    public void testGraph_HasPath_Directed() {
+    public void hasPath_Directed() {
 
         Graph<String, Long> graph = new Graph<>(true);
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
-        graph.addEdge("A", "Z", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+        graph.addEdge(new Edge<>("A", "Z", 3L));
 
         assertThat(graph.hasPath("A", "B"), is(true));
         assertThat(graph.hasPath("A", "C"), is(true));
@@ -170,14 +62,162 @@ public class GraphTest {
 
 
     @Test
-    public void testGraph_FindEdge() {
+    public void shortestPath() {
 
         Graph<String, Long> graph = new Graph<>();
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+        graph.addEdge(new Edge<>("E", "Z", 3L));
+
+        graph.addEdge(new Edge<>("A", "F", 7L));
+        graph.addEdge(new Edge<>("F", "G", 6L));
+        graph.addEdge(new Edge<>("G", "H", 5L));
+        graph.addEdge(new Edge<>("H", "I", 8L));
+        graph.addEdge(new Edge<>("I", "Z", 3L));
+
+        List<Edge<String, Long>> edges1 = graph.shortestPath("A", "Z");
+
+        assertThat(edges1.size(), is(5));
+
+        assertThat(edges1.get(0).getSource(), is("A"));
+        assertThat(edges1.get(0).getDestination(), is("B"));
+        assertThat(edges1.get(1).getSource(), is("B"));
+        assertThat(edges1.get(1).getDestination(), is("C"));
+        assertThat(edges1.get(2).getSource(), is("C"));
+        assertThat(edges1.get(2).getDestination(), is("D"));
+        assertThat(edges1.get(3).getSource(), is("D"));
+        assertThat(edges1.get(3).getDestination(), is("E"));
+        assertThat(edges1.get(4).getSource(), is("E"));
+        assertThat(edges1.get(4).getDestination(), is("Z"));
+
+
+        List<Edge<String, Long>> edges2 = graph.shortestPath("Z", "A");
+
+        assertThat(edges2.size(), is(5));
+
+        assertThat(edges2.get(0).getSource(), is("Z"));
+        assertThat(edges2.get(0).getDestination(), is("E"));
+        assertThat(edges2.get(1).getSource(), is("E"));
+        assertThat(edges2.get(1).getDestination(), is("D"));
+        assertThat(edges2.get(2).getSource(), is("D"));
+        assertThat(edges2.get(2).getDestination(), is("C"));
+        assertThat(edges2.get(3).getSource(), is("C"));
+        assertThat(edges2.get(3).getDestination(), is("B"));
+        assertThat(edges2.get(4).getSource(), is("B"));
+        assertThat(edges2.get(4).getDestination(), is("A"));
+    }
+
+
+    @Test
+    public void shortestPath_Directed() {
+
+        Graph<String, Long> graph = new Graph<>(true);
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+        graph.addEdge(new Edge<>("E", "Z", 3L));
+
+        graph.addEdge(new Edge<>("A", "F", 7L));
+        graph.addEdge(new Edge<>("F", "G", 6L));
+        graph.addEdge(new Edge<>("G", "H", 5L));
+        graph.addEdge(new Edge<>("H", "I", 8L));
+        graph.addEdge(new Edge<>("I", "Z", 3L));
+
+        List<Edge<String, Long>> edges1 = graph.shortestPath("A", "Z");
+
+        assertThat(edges1.size(), is(5));
+
+        assertThat(edges1.get(0).getSource(), is("A"));
+        assertThat(edges1.get(0).getDestination(), is("B"));
+        assertThat(edges1.get(1).getSource(), is("B"));
+        assertThat(edges1.get(1).getDestination(), is("C"));
+        assertThat(edges1.get(2).getSource(), is("C"));
+        assertThat(edges1.get(2).getDestination(), is("D"));
+        assertThat(edges1.get(3).getSource(), is("D"));
+        assertThat(edges1.get(3).getDestination(), is("E"));
+        assertThat(edges1.get(4).getSource(), is("E"));
+        assertThat(edges1.get(4).getDestination(), is("Z"));
+
+
+        List<Edge<String, Long>> edges2 = graph.shortestPath("Z", "A");
+
+        assertThat(edges2.size(), is(0));
+    }
+
+
+    @Test
+    public void shortestPath_NoPath() {
+
+        Graph<String, Long> graph = new Graph<>();
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+
+        graph.addEdge(new Edge<>("F", "G", 6L));
+        graph.addEdge(new Edge<>("G", "H", 5L));
+        graph.addEdge(new Edge<>("H", "I", 8L));
+        graph.addEdge(new Edge<>("I", "Z", 3L));
+
+        assertThat(graph.shortestPath("C", "G").size(), is(0));
+        assertThat(graph.shortestPath("E", "A").size(), is(4));
+    }
+
+
+    @Test
+    public void shortestPath_NoPath_Directed() {
+
+        Graph<String, Long> graph = new Graph<>(true);
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+
+        graph.addEdge(new Edge<>("F", "G", 6L));
+        graph.addEdge(new Edge<>("G", "H", 5L));
+        graph.addEdge(new Edge<>("H", "I", 8L));
+        graph.addEdge(new Edge<>("I", "Z", 3L));
+
+        assertThat(graph.shortestPath("C", "G").size(), is(0));
+        assertThat(graph.shortestPath("E", "A").size(), is(0));
+    }
+
+
+    @Test
+    public void containsNode() {
+
+        Graph<String, Long> graph = new Graph<>();
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
+
+        assertThat(graph.containsNode("A"), is(true));
+        assertThat(graph.containsNode("B"), is(true));
+        assertThat(graph.containsNode("C"), is(true));
+        assertThat(graph.containsNode("D"), is(true));
+        assertThat(graph.containsNode("E"), is(true));
+        assertThat(graph.containsNode("Z"), is(false));
+    }
+
+
+    @Test
+    public void findEdge() {
+
+        Graph<String, Long> graph = new Graph<>();
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
 
         assertThat(graph.findEdge("A", "B"), is(notNullValue()));
         assertThat(graph.findEdge("B", "A"), is(notNullValue()));
@@ -194,14 +234,14 @@ public class GraphTest {
 
 
     @Test
-    public void testGraph_FindEdge_Directed() {
+    public void findEdge_Directed() {
 
         Graph<String, Long> graph = new Graph<>(true);
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("B", "C", 6L);
-        graph.addEdge("C", "D", 4L);
-        graph.addEdge("D", "E", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+        graph.addEdge(new Edge<>("C", "D", 4L));
+        graph.addEdge(new Edge<>("D", "E", 3L));
 
         assertThat(graph.findEdge("A", "B"), is(notNullValue()));
         assertThat(graph.findEdge("B", "C"), is(notNullValue()));
@@ -213,14 +253,14 @@ public class GraphTest {
 
 
     @Test
-    public void testGraph_FindEdgeNeighbours() {
+    public void findEdgeNeighbours() {
 
         Graph<String, Long> graph = new Graph<>();
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("A", "C", 6L);
-        graph.addEdge("A", "D", 4L);
-        graph.addEdge("A", "E", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("A", "C", 6L));
+        graph.addEdge(new Edge<>("A", "D", 4L));
+        graph.addEdge(new Edge<>("A", "E", 3L));
 
         assertThat(graph.findEdgeNeighbours("A").size(), is(4));
         assertThat(graph.findEdgeNeighbours("E").size(), is(1));
@@ -228,14 +268,14 @@ public class GraphTest {
 
 
     @Test
-    public void testGraph_FindEdgeNeighbours_Directed() {
+    public void findEdgeNeighbours_Directed() {
 
         Graph<String, Long> graph = new Graph<>(true);
 
-        graph.addEdge("A", "B", 5L);
-        graph.addEdge("A", "C", 6L);
-        graph.addEdge("A", "D", 4L);
-        graph.addEdge("A", "E", 3L);
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("A", "C", 6L));
+        graph.addEdge(new Edge<>("A", "D", 4L));
+        graph.addEdge(new Edge<>("A", "E", 3L));
 
         assertThat(graph.findEdgeNeighbours("A").size(), is(4));
         assertThat(graph.findEdgeNeighbours("E").size(), is(0));

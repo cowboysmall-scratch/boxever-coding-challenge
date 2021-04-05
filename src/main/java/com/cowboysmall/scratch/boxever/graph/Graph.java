@@ -26,9 +26,10 @@ import static java.lang.String.format;
 @NoArgsConstructor
 public class Graph<N, V extends Number> {
 
-    private static final BigDecimal MAX_VALUE = new BigDecimal("1000000000000.0");
+    private static final BigDecimal MAX_VALUE = BigDecimal.valueOf(Long.MAX_VALUE);
 
     private final List<Edge<N, V>> edges = new ArrayList<>();
+
     private final Set<N> nodes = new HashSet<>();
 
     private boolean directed;
@@ -36,14 +37,19 @@ public class Graph<N, V extends Number> {
 
     //_________________________________________________________________________
 
-    public void addEdge(N source, N destination, V weight) {
+    public void addEdges(List<Edge<N, V>> edges) {
 
-        nodes.add(source);
-        nodes.add(destination);
+        edges.forEach(this::addEdge);
+    }
 
-        edges.add(Edge.<N, V>builder().source(source).destination(destination).weight(weight).build());
+    public void addEdge(Edge<N, V> edge) {
+
+        nodes.add(edge.getSource());
+        nodes.add(edge.getDestination());
+
+        edges.add(edge);
         if (!directed)
-            edges.add(Edge.<N, V>builder().source(destination).destination(source).weight(weight).build());
+            edges.add(edge.reverse());
     }
 
 
@@ -90,7 +96,6 @@ public class Graph<N, V extends Number> {
 
         PriorityQueue<N> priorityQueue =
                 new PriorityQueue<>(Comparator.comparing(dist::get));
-
         priorityQueue.addAll(nodes);
 
         while (!priorityQueue.isEmpty()) {

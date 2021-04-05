@@ -70,7 +70,7 @@ not make sense.
 
 
 
-## The Code
+## The Implementation
 
 I adhered faithfully to the classic implementation of Dijkstra's Algorithm - the priority queue 
 variation - pseudocode can be found [here](https://en.wikipedia.org/wiki/Dijkstra%27s_algorithm#Using_a_priority_queue). 
@@ -79,10 +79,19 @@ it should be relatively easy to use the graph implementation with any object tha
 basic `equals` / `hashCode` contract, and also provides a sensible `toString` implementation.
 
 
-I used a max value that was less than the integer max value to prevent overflow - which would 
-/ could have resulted in negative duration calculations, and thus negative edge weights, which 
-would have broken the algorithm.
+Any value that implements the `Number` interface can be used for edge weights. Internally these 
+values are converted to `BigDecimal` to provide flexibility and accuracy.
 
+
+Care had to be taken with respect to the choice of max value to prevent overflow - which could 
+/ would have resulted in negative duration calculations, and thus negative edge weights, which 
+would have broken the algorithm. As `BigDecimal` was used internally to cater for both 
+`Integer` / `Long` values, and `Float` / `Double` values, the maximum `Long` value was used, converted to 
+`BigDecimal`.
+
+
+
+## The Code
 
 In order to run the application You will first need to clone the project:
 

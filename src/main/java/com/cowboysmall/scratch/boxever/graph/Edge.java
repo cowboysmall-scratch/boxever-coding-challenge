@@ -32,6 +32,15 @@ public class Edge<N, V extends Number> {
         return this.destination.equals(destination);
     }
 
+    public Edge<N, V> reverse() {
+
+        return Edge.<N, V>builder()
+                .source(destination)
+                .destination(source)
+                .weight(weight)
+                .build();
+    }
+
     @Override
     public String toString() {
 
