@@ -35,7 +35,28 @@ public class GraphTest {
 
 
         assertThat(graph.containsEdge("A", "B"), is(true));
+        assertThat(graph.containsEdge("B", "A"), is(true));
         assertThat(graph.containsEdge("B", "C"), is(true));
+        assertThat(graph.containsEdge("C", "B"), is(true));
+
+        assertThat(graph.containsEdge("A", "Z"), is(false));
+    }
+
+
+    @Test
+    public void containsEdge_Directed() {
+
+        Graph<String, Long> graph = new Graph<>(true);
+
+        graph.addEdge(new Edge<>("A", "B", 5L));
+        graph.addEdge(new Edge<>("B", "C", 6L));
+
+
+        assertThat(graph.containsEdge("A", "B"), is(true));
+        assertThat(graph.containsEdge("B", "A"), is(false));
+        assertThat(graph.containsEdge("B", "C"), is(true));
+        assertThat(graph.containsEdge("C", "B"), is(false));
+
         assertThat(graph.containsEdge("A", "Z"), is(false));
     }
 
@@ -69,7 +90,9 @@ public class GraphTest {
 
 
         assertThat(graph.findEdge("A", "B"), is(notNullValue()));
+        assertThat(graph.findEdge("B", "A"), is(nullValue()));
         assertThat(graph.findEdge("B", "C"), is(notNullValue()));
+        assertThat(graph.findEdge("C", "B"), is(nullValue()));
 
         assertThat(graph.findEdge("A", "C"), is(nullValue()));
     }
